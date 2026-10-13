@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4주당 - 정통 명리 & 종합 운세 분석</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Noto Serif KR & Noto Sans KR) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        orientRed: {
+                            800: '#7F1D1D',
+                            900: '#4C0519',
+                            dark: '#2A080C'
+                        },
+                        amberGold: {
+                            300: '#FDE047',
+                            400: '#F59E0B',
+                            500: '#D97706',
+                            glow: '#FFC72C'
+                        },
+                        paperBg: '#12090C'
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif KR"', 'serif'],
+                        sans: ['"Noto Sans KR"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #12090C;
+            color: #F8FAFC;
+            font-family: 'Noto Sans KR', sans-serif;
+            background-image: 
+                linear-gradient(to bottom, rgba(18, 9, 12, 0.72), rgba(10, 4, 6, 0.88)),
+                url('image_7233f234.jpg');
+            background-size: cover;
+            background-position: center top;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        .serif-title {
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        /* Gold & Crimson Gradients */
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #FFF5D6 0%, #F59E0B 50%, #B45309 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-border-glow {
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), 0 0 20px rgba(217, 119, 6, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            background: rgba(26, 12, 17, 0.85);
+            backdrop-filter: blur(12px);
+        }
+
+        .glass-panel {
+            background: rgba(20, 10, 14, 0.82);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #12090C;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7F1D1D;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D97706;
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 15px rgba(217, 119, 6, 0.25); }
+            100% { box-shadow: 0 0 30px rgba(217, 119, 6, 0.6); }
+        }
+
+        /* Print styling */
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-only-white {
+                background: #ffffff !important;
+                color: #111827 !important;
+                border: 1px solid #e5e7eb !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-amber-500 selection:text-black">
+
+    <header class="no-print sticky top-0 z-40 bg-orientRed-dark/85 backdrop-blur-md border-b border-amber-500/20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-red-700 via-amber-500 to-yellow-200 p-[1.5px] shadow-lg flex items-center justify-center">
+                    <div class="w-full h-full bg-orientRed-dark rounded-full flex items-center justify-center border border-amber-500/40">
+                        <span class="serif-title font-black text-xl text-gold-gradient">四</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="serif-title font-black text-2xl tracking-wider text-gold-gradient">4주당</span>
+                    <span class="hidden sm:inline-block text-xs text-amber-400/80 font-mono tracking-widest ml-2 border-l border-amber-500/20 pl-2">四柱堂 · 命理正統</span>
+                </div>
+            </div>
+
+            <!-- Header Quick Info & Actions -->
+            <div class="flex items-center space-x-3">
+                <button onclick="fillSampleData()" class="text-xs sm:text-sm px-3.5 py-2 rounded-xl bg-orientRed-900/60 hover:bg-orientRed-800 text-amber-300 border border-amber-500/40 transition-all duration-200 flex items-center space-x-2 shadow-md">
+                    <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i>
+                    <span>샘플 체험 (예시)</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+        <!-- Hero Title Banner -->
+        <section class="text-center my-6 sm:my-10 space-y-4 no-print">
+            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-medium backdrop-blur-sm">
+                <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                <span>정통 만세력 & 종합 명식 정밀 분석</span>
+            </div>
+            <h1 class="serif-title text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight drop-shadow-md">
+                내 삶을 밝히는 <span class="text-gold-gradient">사주와 운명의 지도</span>
+            </h1>
+            <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed">
+                타고난 타고난 명식(命式)의 오행 균형과 신살, 대운의 흐름, 2026년 세운 및 맞춤 개운법까지<br class="hidden sm:inline">
+                단 한 번의 조회로 명쾌하고 상세하게 풀이해 드립니다.
+            </p>
+        </section>
+
+        <section class="no-print gold-border-glow rounded-2xl p-6 sm:p-8 relative mb-12">
+            <div class="absolute -top-3 left-6 px-4 py-0.5 bg-gradient-to-r from-red-800 via-amber-600 to-amber-500 text-white font-bold text-xs rounded-full uppercase tracking-wider shadow border border-amber-300/30">
+                사주명식 입력 Form
+            </div>
+
+            <form id="sajuForm" onsubmit="calculateSaju(event)" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- 이름 입력 -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-semibold text-amber-300 uppercase tracking-wider">이름 (성함)</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-user absolute left-3.5 top-3.5 text-amber-500/60 text-sm"></i>
+                            <input type="text" id="userName" required placeholder="홍길동" class="w-full pl-10 pr-4 py-2.5 bg-orientRed-dark/80 border border-amber-500/30 rounded-xl focus:border-amber-400 focus:ring-1 focus:ring-amber-400 text-white placeholder-slate-500 text-sm outline-none transition">
+                        </div>
+                    </div>
+
+                    <!-- 성별 선택 (요청사항: 여성 / 남성 순서 변경) -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-semibold text-amber-300 uppercase tracking-wider">성별</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="gender" value="female" checked class="peer sr-only">
+                                <div class="py-2.5 text-center text-sm font-medium rounded-xl border border-amber-500/30 bg-orientRed-dark/80 peer-checked:bg-amber-500/30 peer-checked:border-amber-400 peer-checked:text-amber-200 text-slate-300 transition">
+                                    <i class="fa-solid fa-venus mr-1 text-rose-400"></i> 여성 (陰)
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="gender" value="male" class="peer sr-only">
+                                <div class="py-2.5 text-center text-sm font-medium rounded-xl border border-amber-500/30 bg-orientRed-dark/80 peer-checked:bg-amber-500/30 peer-checked:border-amber-400 peer-checked:text-amber-200 text-slate-300 transition">
+                                    <i class="fa-solid fa-mars mr-1 text-sky-400"></i> 남성 (陽)
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 양력 / 음력 / 윤달 -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-semibold text-amber-300 uppercase tracking-wider">달력 구분</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="calendarType" value="solar" checked class="peer sr-only">
+                                <div class="py-2.5 text-center text-xs sm:text-sm font-medium rounded-xl border border-amber-500/30 bg-orientRed-dark/80 peer-checked:bg-amber-500/30 peer-checked:border-amber-400 peer-checked:text-amber-200 text-slate-300 transition">
+                                    양력
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="calendarType" value="lunar" class="peer sr-only">
+                                <div class="py-2.5 text-center text-xs sm:text-sm font-medium rounded-xl border border-amber-500/30 bg-orientRed-dark/80 peer-checked:bg-amber-500/30 peer-checked:border-amber-400 peer-checked:text-amber-200 text-slate-300 transition">
+                                    음력(평달)
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="calendarType" value="lunarLeap" class="peer sr-only">
+                                <div class="py-2.5 text-center text-xs sm:text-sm font-medium rounded-xl border border-amber-500/30 bg-orientRed-dark/80 peer-checked:bg-amber-500/30 peer-checked:border-amber-400 peer-checked:text-amber-200 text-slate-300 transition">
+                                    음력(윤달)
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 생년월일 -->
+                    <div class="space-y-2 md:col-span-2 lg:col-span-2">
+                        <label class="block text-xs font-semibold text-amber-300 uppercase tracking-wider">생년월일</label>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="relative">
+                                <select id="birthYear" required class="w-full py-2.5 px-3 bg-orientRed-dark/80 border border-amber-500/30 rounded-xl focus:border-amber-400 text-white text-sm outline-none transition appearance-none">
+                                    <!-- Dynamic Years -->
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-xs text-amber-500/60 pointer-events-none"></i>
+                            </div>
+                            <div class="relative">
+                                <select id="birthMonth" required class="w-full py-2.5 px-3 bg-orientRed-dark/80 border border-amber-500/30 rounded-xl focus:border-amber-400 text-white text-sm outline-none transition appearance-none">
+                                    <!-- Dynamic Months -->
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-xs text-amber-500/60 pointer-events-none"></i>
+                            </div>
+                            <div class="relative">
+                                <select id="birthDay" required class="w-full py-2.5 px-3 bg-orientRed-dark/80 border border-amber-500/30 rounded-xl focus:border-amber-400 text-white text-sm outline-none transition appearance-none">
+                                    <!-- Dynamic Days -->
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-xs text-amber-500/60 pointer-events-none"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 출생 시간 (12간지 시간대) -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-semibold text-amber-300 uppercase tracking-wider">출생 시간 (시주)</label>
+                        <div class="relative">
+                            <select id="birthTime" class="w-full py-2.5 px-3 bg-orientRed-dark/80 border border-amber-500/30 rounded-xl focus:border-amber-400 text-white text-sm outline-none transition appearance-none">
+                                <option value="-1">시간 모름 (3기둥 정밀 분석)</option>
+                                <option value="0">자시 (23:30 ~ 01:29)</option>
+                                <option value="1">축시 (01:30 ~ 03:29)</option>
+                                <option value="2">인시 (03:30 ~ 05:29)</option>
+                                <option value="3" selected>묘시 (05:30 ~ 07:29)</option>
+                                <option value="4">진시 (07:30 ~ 09:29)</option>
+                                <option value="5">사시 (09:30 ~ 11:29)</option>
+                                <option value="6">오시 (11:30 ~ 13:29)</option>
+                                <option value="7">미시 (13:30 ~ 15:29)</option>
+                                <option value="8">신시 (15:30 ~ 17:29)</option>
+                                <option value="9">유시 (17:30 ~ 19:29)</option>
+                                <option value="10">술시 (19:30 ~ 21:29)</option>
+                                <option value="11">해시 (21:30 ~ 23:29)</option>
+                            </select>
+                            <i class="fa-solid fa-clock absolute right-3 top-3.5 text-xs text-amber-500/60 pointer-events-none"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-red-800 via-amber-600 to-yellow-500 text-white font-extrabold text-base sm:text-lg tracking-wide hover:brightness-110 active:scale-[0.99] transition shadow-xl shadow-red-900/40 flex items-center justify-center space-x-2 pulse-glow border border-amber-300/40">
+                        <i class="fa-solid fa-compass text-amber-300 text-lg"></i>
+                        <span>종합 사주팔자 명식 풀이하기</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <section id="resultSection" class="hidden space-y-10">
+            
+            <!-- Result Header Banner -->
+            <div class="glass-panel border border-amber-500/40 rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 print-only-white shadow-2xl">
+                <div class="space-y-2 text-center md:text-left">
+                    <span class="text-xs font-mono text-amber-400 tracking-wider uppercase">[ 4주당 정통 命理 綜合 診斷書 ]</span>
+                    <h2 class="serif-title text-2xl sm:text-3xl font-bold text-white"><span id="resName" class="text-gold-gradient"></span> 님의 명식 종합 리포트</h2>
+                    <p class="text-xs sm:text-sm text-slate-300" id="resBirthDetails"></p>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-3 no-print">
+                    <button onclick="shareResult()" class="px-4 py-2.5 rounded-xl bg-orientRed-dark/80 border border-amber-500/30 hover:border-amber-400 text-amber-200 text-xs sm:text-sm font-medium transition flex items-center space-x-2 shadow">
+                        <i class="fa-solid fa-share-nodes text-amber-400"></i>
+                        <span>결과 공유</span>
+                    </button>
+                    <button onclick="window.print()" class="px-4 py-2.5 rounded-xl bg-amber-500/20 border border-amber-500/50 hover:bg-amber-500/30 text-amber-300 text-xs sm:text-sm font-medium transition flex items-center space-x-2 shadow">
+                        <i class="fa-solid fa-file-pdf text-amber-400"></i>
+                        <span>PDF / 인쇄 저장</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 1. Four Pillars Table (사주팔자 4기둥) -->
+            <div class="space-y-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-table-cells text-amber-400 text-lg"></i>
+                    <h3 class="serif-title text-xl sm:text-2xl font-bold text-white">1. 사주팔자 (四柱八字) 기둥 및 십신(十神)</h3>
+                </div>
+
+                <div class="grid grid-cols-4 gap-2 sm:gap-4">
+                    <!-- 시주 -->
+                    <div class="glass-panel rounded-xl p-3 sm:p-5 text-center flex flex-col justify-between space-y-3 relative overflow-hidden">
+                        <span class="text-xs font-bold text-amber-300/80">시주 (時柱)</span>
+                        <div class="space-y-2 my-1">
+                            <div id="p-time-stem" class="p-2 sm:p-3 rounded-lg font-bold text-xl sm:text-3xl serif-title shadow-inner"></div>
+                            <div id="p-time-branch" class="p-2 sm:p-3 rounded-lg font-bold text-xl sm:text-3xl serif-title shadow-inner"></div>
+                        </div>
+                        <span id="p-time-kor" class="text-[11px] sm:text-xs text-slate-300 font-medium"></span>
+                    </div>
+
+                    <!-- 일주 (나 자신) -->
+                    <div class="glass-panel border-2 border-amber-400/80 rounded-xl p-3 sm:p-5 text-center flex flex-col justify-between space-y-3 relative overflow-hidden shadow-xl shadow-amber-500/10">
+                        <div class="absolute top-0 right-0 bg-amber-500 text-black text-[10px] font-bold px-2 py-0.5 rounded-bl">본인(日干)</div>
+                        <span class="text-xs font-bold text-amber-300">일주 (日柱)</span>
+                        <div class="space-y-2 my-1">
+                            <div id="p-day-stem" class="p-2 sm:p-3 rounded-lg font-bold text-xl sm:text-3xl serif-title shadow-inner"></div>
+                            <div id="p-day-branch" class="p-2 sm:p-3 rounded-lg font-bold text-xl sm:text-3xl serif-title shadow-inner"></div>
+                        </div>
+                        <span id="p-day-kor" class="text-[11px] sm:text-xs text-amber-300 font-bold"></span>
+                    </div>
+
+                    <!-- 월주 -->
+                    <div class="glass-panel rounded-xl p-3 sm:p-5 text-center flex flex-col justify-between space-y-3 relative overflow-hidden">
+                        <span class="text-xs font-bold text-amber-300/80">월주 (月柱)</span>
+                        <div class="space-y-2 my-1">
+                            <div id="p-month-stem" class="p-2 sm:p-3 rounded-lg font-bold text-xl sm:text-3xl serif-title shadow-inner"></div>
+                            <div id="p-month-branch" class="p-2 sm:p-3 rounded-lg font-bold text-xl sm:text-3xl serif-title shadow-inner"></div>
+                        </div>
+                        <span id="p-month-kor" class="text-[11px] sm:text-xs text-slate-300 font-medium"></span>
+                    </div>
+
+                    <!-- 년주 -->
+                    <div class="glass-panel rounded-xl p-3 sm:p-5 text-center flex flex-col justify-between space-y-3 relative overflow-hidden">
+                        <span class="text-xs font-bold text-amber-300/80">년주 (年柱)</span>
+                        <div class="space-y-2 my-1">
+                            <div id="p-year-stem" class="p-2 sm:p-3 rounded-lg font-bold text-xl sm:text-3xl serif-title shadow-inner"></div>
+                            <div id="p-year-branch" class="p-2 sm:p-3 rounded-lg font-bold text-xl sm:text-3xl serif-title shadow-inner"></div>
+                        </div>
+                        <span id="p-year-kor" class="text-[11px] sm:text-xs text-slate-300 font-medium"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 오행 분석 & 성향 분석 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- 오행 그래프 -->
+                <div class="glass-panel rounded-2xl p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-chart-pie text-amber-400"></i>
+                            <h3 class="serif-title text-lg font-bold text-white">오행(五行) 에너지 비율</h3>
+                        </div>
+                        <span class="text-xs text-amber-300/80">목·화·토·금·수 분포</span>
+                    </div>
+
+                    <div id="elementBars" class="space-y-3 pt-2">
+                        <!-- Dynamic Progress Bars Loaded Here -->
+                    </div>
+                </div>
+
+                <!-- 수호 오행 및 일간 성향 -->
+                <div class="glass-panel rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-shield-halved text-amber-400"></i>
+                            <h3 class="serif-title text-lg font-bold text-white">타고난 본성 & 일간(日干) 분석</h3>
+                        </div>
+                        <div class="p-4 rounded-xl bg-orientRed-dark/60 border border-amber-500/30">
+                            <div class="text-xs text-amber-400 font-medium mb-1">핵심 기운 심층 진단</div>
+                            <div id="mainElementTitle" class="text-xl font-bold text-white serif-title"></div>
+                            <p id="mainElementDesc" class="text-xs sm:text-sm text-slate-200 mt-2 font-light leading-relaxed"></p>
+                        </div>
+                    </div>
+
+                    <div id="elementSummaryBadge" class="p-3.5 rounded-xl bg-amber-500/15 border border-amber-500/30 text-xs text-amber-200 flex items-center space-x-3">
+                        <i class="fa-solid fa-star text-amber-400 text-lg"></i>
+                        <span id="elementBadgeText"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. [신규 확장] 핵심 신살(神煞) 및 주요 특성 카드 -->
+            <div class="space-y-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-dragon text-amber-400 text-lg"></i>
+                    <h3 class="serif-title text-xl sm:text-2xl font-bold text-white">3. 주요 신살(神煞) & 길성(吉星) 진단</h3>
+                </div>
+
+                <div id="sinsalGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Dynamic Sinsal Cards Inserted Here -->
+                </div>
+            </div>
+
+            <!-- 4. [신규 확장] 2026년 병오년(丙午年) 세운 및 월별 흐름 -->
+            <div class="glass-panel rounded-2xl p-6 sm:p-8 space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-500/20 pb-4">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-calendar-check text-amber-400 text-xl"></i>
+                        <h3 class="serif-title text-xl sm:text-2xl font-bold text-white">4. 2026년 병오년(丙午年) 총운 & 월별 흐름</h3>
+                    </div>
+                    <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-semibold self-start sm:self-auto border border-amber-500/30">
+                        적마(赤馬)의 해 세운
+                    </span>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-base font-bold text-amber-300 flex items-center gap-2">
+                        <i class="fa-solid fa-fire text-rose-400"></i> 2026년 핵심 세운 풀이
+                    </h4>
+                    <p id="year2026Text" class="text-xs sm:text-sm text-slate-200 leading-relaxed font-light"></p>
+                </div>
+
+                <!-- 월별 운세 흐름 가이드 -->
+                <div class="space-y-3 pt-2">
+                    <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider">2026년 분기별 조언 흐름</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+                        <div class="p-3.5 rounded-xl bg-orientRed-dark/70 border border-amber-500/20 space-y-1">
+                            <span class="font-bold text-amber-300">1분기 (1~3월)</span>
+                            <p id="q1Text" class="text-slate-300 font-light"></p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-orientRed-dark/70 border border-amber-500/20 space-y-1">
+                            <span class="font-bold text-amber-300">2분기 (4~6월)</span>
+                            <p id="q2Text" class="text-slate-300 font-light"></p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-orientRed-dark/70 border border-amber-500/20 space-y-1">
+                            <span class="font-bold text-amber-300">3분기 (7~9월)</span>
+                            <p id="q3Text" class="text-slate-300 font-light"></p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-orientRed-dark/70 border border-amber-500/20 space-y-1">
+                            <span class="font-bold text-amber-300">4분기 (10~12월)</span>
+                            <p id="q4Text" class="text-slate-300 font-light"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. [신규 확장] 인생의 큰 줄기 - 10년 대운(大運) 흐름 -->
+            <div class="glass-panel rounded-2xl p-6 sm:p-8 space-y-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-water text-amber-400 text-lg"></i>
+                    <h3 class="serif-title text-xl sm:text-2xl font-bold text-white">5. 10년 대운(大運)의 변곡점 및 흐름</h3>
+                </div>
+                <p class="text-xs text-slate-300 font-light">인생의 큰 계절이 바뀌는 대운의 주기와 각 시기별 주요 키워드를 안내합니다.</p>
+                
+                <div id="daeunContainer" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 pt-2">
+                    <!-- Dynamic Daeun Cards -->
+                </div>
+            </div>
+
+            <!-- 6. 운세 분야별 종합 풀이 (재물, 애정, 건강, 사업) -->
+            <div class="space-y-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-scroll text-amber-400 text-lg"></i>
+                    <h3 class="serif-title text-xl sm:text-2xl font-bold text-white">6. 테마별 정밀 운세 풀이</h3>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- 재물운 -->
+                    <div class="glass-panel rounded-xl p-5 space-y-3 hover:border-amber-400/50 transition">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-coins"></i> 재물운 (財運)</span>
+                            <div id="starWealth" class="text-xs text-amber-400"></div>
+                        </div>
+                        <p id="descWealth" class="text-xs text-slate-200 leading-relaxed font-light"></p>
+                    </div>
+
+                    <!-- 애정운 -->
+                    <div class="glass-panel rounded-xl p-5 space-y-3 hover:border-amber-400/50 transition">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-rose-400 flex items-center gap-1.5"><i class="fa-solid fa-heart"></i> 애정/인연운 (愛運)</span>
+                            <div id="starLove" class="text-xs text-rose-400"></div>
+                        </div>
+                        <p id="descLove" class="text-xs text-slate-200 leading-relaxed font-light"></p>
+                    </div>
+
+                    <!-- 건강운 -->
+                    <div class="glass-panel rounded-xl p-5 space-y-3 hover:border-amber-400/50 transition">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5"><i class="fa-solid fa-notes-medical"></i> 건강운 (健康運)</span>
+                            <div id="starHealth" class="text-xs text-emerald-400"></div>
+                        </div>
+                        <p id="descHealth" class="text-xs text-slate-200 leading-relaxed font-light"></p>
+                    </div>
+
+                    <!-- 사업/학업운 -->
+                    <div class="glass-panel rounded-xl p-5 space-y-3 hover:border-amber-400/50 transition">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-sky-400 flex items-center gap-1.5"><i class="fa-solid fa-briefcase"></i> 사업/성취운 (事業運)</span>
+                            <div id="starCareer" class="text-xs text-sky-400"></div>
+                        </div>
+                        <p id="descCareer" class="text-xs text-slate-200 leading-relaxed font-light"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. [신규 확장] 나만을 위한 개운법(開運法) & 행운 처방 -->
+            <div class="glass-panel border-amber-500/40 rounded-2xl p-6 sm:p-8 space-y-6">
+                <div class="flex items-center space-x-2 border-b border-amber-500/20 pb-4">
+                    <i class="fa-solid fa-yin-yang text-amber-400 text-2xl"></i>
+                    <h3 class="serif-title text-xl sm:text-2xl font-bold text-white">7. 맞춤 개운(開運) 처방 및 행운 요소</h3>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                    <div class="p-4 rounded-xl bg-orientRed-dark/80 border border-amber-500/20 space-y-2">
+                        <span class="text-xs font-bold text-amber-400">행운의 색상 (Color)</span>
+                        <div id="luckyColor" class="text-sm font-bold text-white"></div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-orientRed-dark/80 border border-amber-500/20 space-y-2">
+                        <span class="text-xs font-bold text-amber-400">행운의 숫자 (Number)</span>
+                        <div id="luckyNumber" class="text-sm font-bold text-white"></div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-orientRed-dark/80 border border-amber-500/20 space-y-2">
+                        <span class="text-xs font-bold text-amber-400">행운의 방위 (Direction)</span>
+                        <div id="luckyDirection" class="text-sm font-bold text-white"></div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-orientRed-dark/80 border border-amber-500/20 space-y-2">
+                        <span class="text-xs font-bold text-amber-400">추천 아이템/장소</span>
+                        <div id="luckyItem" class="text-sm font-bold text-white"></div>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-2">
+                    <h4 class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                        <i class="fa-solid fa-lightbulb"></i> 일상 속 오행 개운 실천 팁
+                    </h4>
+                    <p id="remedyTip" class="text-xs sm:text-sm text-slate-200 font-light leading-relaxed"></p>
+                </div>
+            </div>
+
+            <!-- 8. 최종 종합 조언 -->
+            <div class="bg-gradient-to-br from-orientRed-900/90 via-orientRed-dark to-black border border-amber-500/40 rounded-2xl p-6 sm:p-8 space-y-3 shadow-2xl">
+                <h4 class="serif-title text-xl font-bold text-gold-gradient flex items-center gap-2">
+                    <i class="fa-solid fa-quote-left text-amber-500 text-base"></i> 4주당 최종 총평 조언
+                </h4>
+                <p id="totalAdvice" class="text-sm text-slate-200 leading-relaxed font-light"></p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="no-print bg-orientRed-dark/90 border-t border-amber-500/20 py-8 text-center text-xs text-slate-400 mt-12">
+        <div class="max-w-6xl mx-auto px-4 space-y-2">
+            <p class="font-medium text-amber-300/90">4주당 (四柱堂) · 정통 명리 & 동양운세 플랫폼</p>
+            <p class="text-slate-400 font-light">제공되는 사주 및 운세 해석은 삶의 조언이며, 모든 운명은 본인의 의지와 선택에 의해 변화할 수 있습니다.</p>
+            <p class="pt-2 text-slate-500">© 2026 4주당. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Custom Modal -->
+    <div id="customModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md no-print">
+        <div class="glass-panel border border-amber-500/50 rounded-2xl p-6 max-w-sm w-full space-y-4 shadow-2xl text-center">
+            <div class="w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto text-xl border border-amber-500/40">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+            <h3 id="modalTitle" class="serif-title text-lg font-bold text-white">알림</h3>
+            <p id="modalMsg" class="text-xs text-slate-200 leading-relaxed font-light"></p>
+            <button onclick="closeModal()" class="w-full py-2.5 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-black font-bold text-xs rounded-xl transition shadow-lg">
+                확인
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Data Definitions
+        const STEMS = [
+            { name: '갑', hanja: '甲', element: 'wood', elementKor: '목(木)', polarity: '양' },
+            { name: '을', hanja: '乙', element: 'wood', elementKor: '목(木)', polarity: '음' },
+            { name: '병', hanja: '丙', element: 'fire', elementKor: '화(火)', polarity: '양' },
+            { name: '정', hanja: '丁', element: 'fire', elementKor: '화(火)', polarity: '음' },
+            { name: '무', hanja: '戊', element: 'earth', elementKor: '토(土)', polarity: '양' },
+            { name: '기', hanja: '己', element: 'earth', elementKor: '토(土)', polarity: '음' },
+            { name: '경', hanja: '庚', element: 'metal', elementKor: '금(金)', polarity: '양' },
+            { name: '신', hanja: '辛', element: 'metal', elementKor: '금(金)', polarity: '음' },
+            { name: '임', hanja: '壬', element: 'water', elementKor: '수(水)', polarity: '양' },
+            { name: '계', hanja: '癸', element: 'water', elementKor: '수(水)', polarity: '음' }
+        ];
+
+        const BRANCHES = [
+            { name: '자', hanja: '子', element: 'water', elementKor: '수(水)', animal: '쥐' },
+            { name: '축', hanja: '丑', element: 'earth', elementKor: '토(土)', animal: '소' },
+            { name: '인', hanja: '寅', element: 'wood', elementKor: '목(木)', animal: '호랑이' },
+            { name: '묘', hanja: '卯', element: 'wood', elementKor: '목(木)', animal: '토끼' },
+            { name: '진', hanja: '辰', element: 'earth', elementKor: '토(土)', animal: '용' },
+            { name: '사', hanja: '巳', element: 'fire', elementKor: '화(火)', animal: '뱀' },
+            { name: '오', hanja: '午', element: 'fire', elementKor: '화(火)', animal: '말' },
+            { name: '미', hanja: '未', element: 'earth', elementKor: '토(土)', animal: '양' },
+            { name: '신', hanja: '申', element: 'metal', elementKor: '금(金)', animal: '원숭이' },
+            { name: '유', hanja: '酉', element: 'metal', elementKor: '금(金)', animal: '닭' },
+            { name: '술', hanja: '戌', element: 'earth', elementKor: '토(土)', animal: '개' },
+            { name: '해', hanja: '亥', element: 'water', elementKor: '수(水)', animal: '돼지' }
+        ];
+
+        const ELEMENT_STYLES = {
+            wood: { name: '목 (Wood)', bg: 'bg-emerald-950/90', border: 'border-emerald-500/60', text: 'text-emerald-300', barBg: 'bg-emerald-500' },
+            fire: { name: '화 (Fire)', bg: 'bg-rose-950/90', border: 'border-rose-500/60', text: 'text-rose-300', barBg: 'bg-rose-500' },
+            earth: { name: '토 (Earth)', bg: 'bg-amber-950/90', border: 'border-amber-500/60', text: 'text-amber-300', barBg: 'bg-amber-500' },
+            metal: { name: '금 (Metal)', bg: 'bg-slate-800/90', border: 'border-slate-400/60', text: 'text-slate-200', barBg: 'bg-slate-300' },
+            water: { name: '수 (Water)', bg: 'bg-blue-950/90', border: 'border-blue-500/60', text: 'text-blue-300', barBg: 'bg-blue-500' }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initDateDropdowns();
+        });
+
+        function initDateDropdowns() {
+            const yearSelect = document.getElementById('birthYear');
+            const monthSelect = document.getElementById('birthMonth');
+            const daySelect = document.getElementById('birthDay');
+
+            const currentYear = 2026;
+            for (let y = currentYear; y >= 1930; y--) {
+                const opt = document.createElement('option');
+                opt.value = y;
+                opt.textContent = `${y}년`;
+                if (y === 1996) opt.selected = true;
+                yearSelect.appendChild(opt);
+            }
+
+            for (let m = 1; m <= 12; m++) {
+                const opt = document.createElement('option');
+                opt.value = m;
+                opt.textContent = `${m}월`;
+                if (m === 6) opt.selected = true;
+                monthSelect.appendChild(opt);
+            }
+
+            for (let d = 1; d <= 31; d++) {
+                const opt = document.createElement('option');
+                opt.value = d;
+                opt.textContent = `${d}일`;
+                if (d === 18) opt.selected = true;
+                daySelect.appendChild(opt);
+            }
+        }
+
+        function fillSampleData() {
+            document.getElementById('userName').value = '김서연';
+            document.getElementById('birthYear').value = 1996;
+            document.getElementById('birthMonth').value = 6;
+            document.getElementById('birthDay').value = 18;
+            document.getElementById('birthTime').value = 3; // 묘시
+            document.querySelector('input[name="gender"][value="female"]').checked = true;
+            showModal('샘플 체험 자동 입력', '1996년 6월 18일 묘시(여성) 정보가 적용되었습니다. [종합 사주팔자 명식 풀이하기] 버튼을 누르시면 풍성한 풀이를 확인하실 수 있습니다.');
+        }
+
+        // Calculation
+        function calculateSaju(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('userName').value.trim() || '사용자';
+            const year = parseInt(document.getElementById('birthYear').value);
+            const month = parseInt(document.getElementById('birthMonth').value);
+            const day = parseInt(document.getElementById('birthDay').value);
+            const timeIdx = parseInt(document.getElementById('birthTime').value);
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const calType = document.querySelector('input[name="calendarType"]:checked').value;
+
+            // Year Pillar
+            const yearStemIdx = (year - 4) % 10 < 0 ? ((year - 4) % 10) + 10 : (year - 4) % 10;
+            const yearBranchIdx = (year - 4) % 12 < 0 ? ((year - 4) % 12) + 12 : (year - 4) % 12;
+
+            // Month Pillar
+            const monthBranchIdx = (month + 1) % 12; 
+            const monthStemIdx = (yearStemIdx * 2 + month) % 10;
+
+            // Day Pillar
+            const baseJulian = Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day - 1524;
+            const dayStemIdx = (baseJulian + 9) % 10;
+            const dayBranchIdx = (baseJulian + 1) % 12;
+
+            // Time Pillar
+            let timeStemIdx = -1;
+            let timeBranchIdx = -1;
+            if (timeIdx !== -1) {
+                timeBranchIdx = timeIdx;
+                timeStemIdx = (dayStemIdx * 2 + timeIdx) % 10;
+            }
+
+            const pillars = {
+                year: { stem: STEMS[yearStemIdx], branch: BRANCHES[yearBranchIdx] },
+                month: { stem: STEMS[monthStemIdx], branch: BRANCHES[monthBranchIdx] },
+                day: { stem: STEMS[dayStemIdx], branch: BRANCHES[dayBranchIdx] },
+                time: timeIdx !== -1 ? { stem: STEMS[timeStemIdx], branch: BRANCHES[timeBranchIdx] } : null
+            };
+
+            renderFullSajuReport(name, year, month, day, calType, gender, pillars);
+        }
+
+        function renderFullSajuReport(name, y, m, d, calType, gender, pillars) {
+            const resultSec = document.getElementById('resultSection');
+            resultSec.classList.remove('hidden');
+            resultSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            document.getElementById('resName').textContent = name;
+            const calText = calType === 'solar' ? '양력' : (calType === 'lunar' ? '음력(평달)' : '음력(윤달)');
+            const genderText = gender === 'female' ? '여성 (陰)' : '남성 (陽)';
+            document.getElementById('resBirthDetails').textContent = `${y}년 ${m}월 ${d}일 (${calText}) · ${genderText}`;
+
+            // Render 4 Pillars
+            renderPillarCard('p-year', pillars.year);
+            renderPillarCard('p-month', pillars.month);
+            renderPillarCard('p-day', pillars.day);
+            renderPillarCard('p-time', pillars.time);
+
+            // Five Elements Count
+            const counts = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
+            const pKeys = ['year', 'month', 'day'];
+            if (pillars.time) pKeys.push('time');
+
+            pKeys.forEach(k => {
+                counts[pillars[k].stem.element]++;
+                counts[pillars[k].branch.element]++;
+            });
+
+            const totalElements = pKeys.length * 2;
+            renderFiveElementsBar(counts, totalElements);
+
+            // Day Stem Personality
+            renderPersonalityAndFortune(name, pillars.day.stem, counts);
+
+            // Extended Content Renderers
+            renderSinsalCards(pillars);
+            render2026Fortune(name, pillars.day.stem);
+            renderDaeunFlow(y, gender);
+            renderRemediesAndLuck(pillars.day.stem.element, counts);
+        }
+
+        function renderPillarCard(prefix, pillar) {
+            const stemEl = document.getElementById(`${prefix}-stem`);
+            const branchEl = document.getElementById(`${prefix}-branch`);
+            const korEl = document.getElementById(`${prefix}-kor`);
+
+            if (!pillar) {
+                stemEl.className = 'p-2 sm:p-3 rounded-lg font-bold text-slate-500 bg-slate-900/60 border border-slate-800';
+                stemEl.textContent = '未';
+                branchEl.className = 'p-2 sm:p-3 rounded-lg font-bold text-slate-500 bg-slate-900/60 border border-slate-800';
+                branchEl.textContent = '時';
+                korEl.textContent = '시간 미입력';
+                return;
+            }
+
+            const stemStyle = ELEMENT_STYLES[pillar.stem.element];
+            const branchStyle = ELEMENT_STYLES[pillar.branch.element];
+
+            stemEl.className = `p-2 sm:p-3 rounded-lg font-bold text-xl sm:text-3xl serif-title shadow-inner border ${stemStyle.bg} ${stemStyle.border} ${stemStyle.text}`;
+            stemEl.textContent = pillar.stem.hanja;
+
+            branchEl.className = `p-2 sm:p-3 rounded-lg font-bold text-xl sm:text-3xl serif-title shadow-inner border ${branchStyle.bg} ${branchStyle.border} ${branchStyle.text}`;
+            branchEl.textContent = pillar.branch.hanja;
+
+            korEl.textContent = `${pillar.stem.name}(${pillar.stem.elementKor}) ${pillar.branch.name}(${pillar.branch.elementKor})`;
+        }
+
+        function renderFiveElementsBar(counts, total) {
+            const container = document.getElementById('elementBars');
+            container.innerHTML = '';
+
+            const elementKeys = [
+                { key: 'wood', name: '목 (木) · 성장/창의' },
+                { key: 'fire', name: '화 (火) · 열정/표현' },
+                { key: 'earth', name: '토 (土) · 포용/안정' },
+                { key: 'metal', name: '금 (金) · 결단/의리' },
+                { key: 'water', name: '수 (水) · 지혜/유연' }
+            ];
+
+            elementKeys.forEach(item => {
+                const count = counts[item.key] || 0;
+                const percent = Math.round((count / total) * 100);
+                const style = ELEMENT_STYLES[item.key];
+
+                const row = document.createElement('div');
+                row.className = 'space-y-1';
+                row.innerHTML = `
+                    <div class="flex justify-between text-xs font-medium">
+                        <span class="${style.text}">${item.name}</span>
+                        <span class="text-slate-300 font-mono">${count}개 (${percent}%)</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-orientRed-dark rounded-full overflow-hidden border border-amber-500/20 p-0.5">
+                        <div class="h-full rounded-full ${style.barBg} transition-all duration-500" style="width: ${percent}%"></div>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function renderPersonalityAndFortune(name, dayStem, counts) {
+            const mainTitle = document.getElementById('mainElementTitle');
+            const mainDesc = document.getElementById('mainElementDesc');
+            const badgeText = document.getElementById('elementBadgeText');
+
+            const stemInterpretations = {
+                '갑': { title: '갑목(甲木) - 당당하고 곧게 솟은 대두목의 상', desc: '곧게 뻗은 울창한 거목처럼 확고한 리더십과 굽히지 않는 기상을 지녔습니다. 원칙을 중시하며 개척 정신이 뛰어나 사람들을 이끄는 위치에 어울립니다.' },
+                '을': { title: '을목(乙木) - 적응력이 뛰어난 유연한 덩굴', desc: '외유내강의 전형으로 환경 변화에 민첩하고 잡초 같은 생명력을 자랑합니다. 사람과의 관계 형성이 매끄럽고 친화력이 뛰어납니다.' },
+                '병': { title: '병화(丙火) - 세상 만물을 비추는 태양의 열정', desc: '밝고 긍정적이며 주변을 환하게 밝히는 에너지가 넘칩니다. 뒤끝이 없고 담백하며 명확한 목표를 향해 솔선수범하는 성품입니다.' },
+                '정': { title: '정화(丁火) - 은은하게 마음을 적시는 등불', desc: '섬세하고 감수성이 풍부하며 따뜻한 배려심을 갖췄습니다. 내면의 강한 집중력과 집념으로 사물의 본질을 정밀하게 파악하는 힘이 있습니다.' },
+                '무': { title: '무토(戊土) - 웅장하고 신뢰감을 주는 높은 산', desc: '묵직하고 흔들림이 없으며 높은 신의를 바탕으로 중용을 지킵니다. 타인의 이야기를 잘 들어주며 중재자로서의 재능이 뛰어납니다.' },
+                '기': { title: '기토(己土) - 만물을 다정하게 키우는 비옥한 토지', desc: '포용력이 넓고 상냥하며 실속을 원만하게 챙기는 타입입니다. 타인을 잘 보살피고 세심하여 주변의 두터운 신망을 얻습니다.' },
+                '경': { title: '경금(庚金) - 단단하고 예리한 원석과 무사 기상', desc: '명확한 주관과 강인한 결단력을 겸비하였습니다. 불의를 보고 참지 못하며 한 번 결심한 목표는 과감하게 밀고 나가는 추진력이 뛰어납니다.' },
+                '신': { title: '신금(辛金) - 정교하고 빛나는 보석과 칼날', desc: '자존심이 강하고 매사 정갈하며 완벽주의 성향을 지닙니다. 예리한 감각과 높은 미적 안목으로 정밀한 작업이나 자산 관리에 능합니다.' },
+                '임': { title: '임수(壬水) - 깊이를 가늠할 수 없는 거대한 바다', desc: '생각의 폭이 넓고 지혜로우며 임기응변 능력이 탁월합니다. 수용성이 뛰어나 어떠한 상황도 유연하게 흡수하고 활용하는 대범함이 있습니다.' },
+                '계': { title: '계수(癸水) - 만물을 적셔주는 단비와 샘물', desc: '지혜롭고 기교가 뛰어나며 정서적으로 은은한 매력을 발산합니다. 조용하지만 도도히 흐르듯 끊임없이 노력하여 목표를 달성합니다.' }
+            };
+
+            const interp = stemInterpretations[dayStem.name];
+            mainTitle.textContent = interp.title;
+            mainDesc.textContent = interp.desc;
+
+            let maxElem = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+            const elemNames = { wood: '목(木)', fire: '화(火)', earth: '토(土)', metal: '금(金)', water: '수(Water)' };
+            badgeText.textContent = `${name}님의 명식은 [${elemNames[maxElem]}] 기운이 강하게 작용하고 있어, 이를 절제하고 조화시키는 용신(用神)의 조율이 삶의 개운 핵심입니다.`;
+
+            // Star Ratings & Detailed Fortune
+            renderStars('starWealth', 5);
+            document.getElementById('descWealth').textContent = '타고난 재물 창고가 견고하여 차곡차곡 자산을 증식시키는 운입니다. 장기적 관점의 투자나 자기 전문 기술이 시너지를 발휘합니다.';
+
+            renderStars('starLove', 4);
+            document.getElementById('descLove').textContent = '서로에게 긍정적인 자극이 되는 귀인 인연운이 매우 강합니다. 깊은 대화와 존중을 바탕으로 한 관계가 결실을 맺습니다.';
+
+            renderStars('starHealth', 4);
+            document.getElementById('descHealth').textContent = '전반적인 기혈 순환이 양호하나, 일교차가 크거나 과로할 때 신경계 및 소화기 관리에 주의가 필요합니다.';
+
+            renderStars('starCareer', 5);
+            document.getElementById('descCareer').textContent = '조직에서의 인정 및 기획/사업 추진력이 상승하는 시기입니다. 본인의 의견이 주요 의사결정에 크게 반영될 수 있습니다.';
+
+            document.getElementById('totalAdvice').textContent = 
+                `${name}님은 일간 '${dayStem.name}(${dayStem.hanja})'의 순수한 에너지를 지니고 있어 명확한 자기 주관과 뛰어난 잠재력을 보유하고 계십니다. ` +
+                `주변 환경의 기운 변화에 유연하게 대처하고 부족한 오행을 보완하신다면 중년 이후 거대한 성취와 명예를 무난히 거머쥘 명식입니다.`;
+        }
+
+        function renderStars(containerId, count) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement('i');
+                star.className = i <= count ? 'fa-solid fa-star text-amber-400' : 'fa-regular fa-star opacity-30';
+                container.appendChild(star);
+            }
+        }
+
+        // Newly Added Extension Renderers
+        function renderSinsalCards(pillars) {
+            const container = document.getElementById('sinsalGrid');
+            container.innerHTML = '';
+
+            const sinsals = [
+                { title: '천을귀인 (天乙貴人)', icon: 'fa-wand-magic-sparkles', color: 'text-amber-300', desc: '위기 순간마다 나를 돕는 귀인과 손길이 나타나는 최고의 길성입니다.' },
+                { title: '문창귀인 (文昌貴人)', icon: 'fa-book-bookmark', color: 'text-sky-300', desc: '학문과 예술, 총명함과 문서 운을 상징하며 전문 분야 능력이 발휘됩니다.' },
+                { title: '역마살 (驛馬殺)', icon: 'fa-horse-head', color: 'text-emerald-300', desc: '활동 범위가 넓고 해외/원거리 이동 및 출장이 많을수록 발전하는 기운입니다.' }
+            ];
+
+            sinsals.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'glass-panel p-4 rounded-xl space-y-2 border border-amber-500/20';
+                card.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid ${item.icon} ${item.color}"></i>
+                        <span class="font-bold text-sm text-white">${item.title}</span>
+                    </div>
+                    <p class="text-xs text-slate-300 font-light leading-relaxed">${item.desc}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function render2026Fortune(name, dayStem) {
+            document.getElementById('year2026Text').textContent = 
+                `2026년 병오년(丙午年)은 강렬한 적마(赤馬)의 기운이 지배하는 해입니다. ${name}님의 일간 '${dayStem.name}'과 조화를 이루어 그동안 준비해 온 계획들이 시원하게 추진되고 결실을 맺는 역동적인 한 해가 될 것입니다.`;
+
+            document.getElementById('q1Text').textContent = '씨앗을 심는 시기. 새로운 프로젝트나 공부 시작에 매우 적합함.';
+            document.getElementById('q2Text').textContent = '활동력이 왕성해지며 외부 협력과 귀인의 도움이 눈에 띄게 늘어남.';
+            document.getElementById('q3Text').textContent = '재물 수확과 성과 창출. 지나친 확장보다는 실속을 챙길 때.';
+            document.getElementById('q4Text').textContent = '내실을 다지고 한 해의 성과를 정리하며 다음 단계를 도모함.';
+        }
+
+        function renderDaeunFlow(birthYear, gender) {
+            const container = document.getElementById('daeunContainer');
+            container.innerHTML = '';
+
+            const ageRanges = ['10~19세', '20~29세', '30~39세', '40~49세', '50~59세', '60세 이후'];
+            const keywords = ['학업 & 기반 구축', '청년 도전 & 인연', '도약 & 도약기', '전성기 & 결실', '안정 & 관록', '원숙 & 유유자적'];
+
+            ageRanges.forEach((range, idx) => {
+                const card = document.createElement('div');
+                card.className = 'p-3 rounded-xl bg-orientRed-dark/80 border border-amber-500/20 text-center space-y-1';
+                card.innerHTML = `
+                    <span class="text-[11px] font-bold text-amber-400 block">${range}</span>
+                    <span class="text-xs font-semibold text-white block">${keywords[idx]}</span>
+                    <span class="text-[10px] text-slate-400 block">대운 흐름</span>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderRemediesAndLuck(element, counts) {
+            const luckData = {
+                wood: { color: '청색 / 초록색', number: '3, 8', dir: '동쪽 (East)', item: '목공예품, 식물, 숲길 산책' },
+                fire: { color: '적색 / 붉은색', number: '2, 7', dir: '남쪽 (South)', item: '조명, 따뜻한 차, 햇살 받는 공간' },
+                earth: { color: '황색 / 베이지', number: '5, 10', dir: '중앙 / 평지', item: '도자기, 흙 관련 인테리어, 황토' },
+                metal: { color: '백색 / 은색', number: '4, 9', dir: '서쪽 (West)', item: '금속 액세서리, 시계, 바위산' },
+                water: { color: '흑색 / 남색', number: '1, 6', dir: '북쪽 (North)', item: '수족관, 분수, 강/바다 여행' }
+            };
+
+            const luck = luckData[element] || luckData.wood;
+            document.getElementById('luckyColor').textContent = luck.color;
+            document.getElementById('luckyNumber').textContent = luck.number;
+            document.getElementById('luckyDirection').textContent = luck.dir;
+            document.getElementById('luckyItem').textContent = luck.item;
+
+            document.getElementById('remedyTip').textContent = 
+                `기운의 균형을 유지하기 위해 '행운의 색상(${luck.color})'을 의상이나 소품에 활용하시고, ` +
+                `소중한 의사결정을 내릴 때 '행운의 방위(${luck.dir})'를 염두에 두시면 기운이 한층 개운(開運)됩니다.`;
+        }
+
+        function showModal(title, msg) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMsg').textContent = msg;
+            document.getElementById('customModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').classList.add('hidden');
+        }
+
+        function shareResult() {
+            const name = document.getElementById('userName').value || '사용자';
+            const shareText = `[4주당] ${name}님의 사주팔자 명식 종합 리포트가 완성되었습니다. 나만의 음양오행과 운세를 확인해보세요!`;
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(window.location.href);
+                showModal('링크 복사 완료', '4주당 서비스 링크가 클립보드에 복사되었습니다. 원하시는 곳에 공유해주세요!');
+            } else {
+                showModal('공유하기', shareText);
+            }
+        }
+    </script>
+</body>
+</html>
